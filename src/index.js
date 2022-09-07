@@ -4,6 +4,8 @@ const laptopRoute = require("./route/laptop.route");
 const app = express();
 const port = process.env.PORT || 8000;
 const mobileRoute = require("./route/mobile.route");
+var cors = require('cors'); 
+app.use(cors())
 
 app.use(express.json());
 require("dotenv").config();
