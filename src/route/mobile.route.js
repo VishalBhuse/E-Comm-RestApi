@@ -4,13 +4,19 @@ const Mobile = require("../schema/mobile.schema");
 const mobileRoute = express.Router();
 
 mobileRoute.get("/", async (req, res) => {
-  let mobi = await Mobile.find();
-  res.send(mobi);
+  let { page, size } = req.query;
+  if (!page) {page = 1;}
+  if (!size) {size = 25;}
+  const limit = parseInt(size);
+  const skip = (page - 1) * size;
+
+  let mobile = await Mobile.find().skip(skip).limit(limit);
+  res.send({ page, size, mobile });
 });
 
 mobileRoute.get("/:id", async (req, res) => {
   try {
-    let mobi = await Mobile.findOne({_id : req.params.id});
+    let mobi = await Mobile.findOne({ _id: req.params.id });
     res.send(mobi);
   } catch (error) {
     res.status(404).send(error.message);

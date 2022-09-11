@@ -4,8 +4,14 @@ const Laptop = require("../schema/laptop.schema");
 const laptopRoute = express.Router();
 
 laptopRoute.get("/", async (req, res) => {
-  let lapy = await Laptop.find();
-  res.send(lapy);
+  let { page, size } = req.query;
+  if (!page) {page = 1;}
+  if (!size) {size = 25;}
+  const limit = parseInt(size);
+  const skip = (page - 1) * size;
+
+  let laptop = await Laptop.find().skip(skip).limit(limit);
+  res.send({ page, size, laptop });
 });
 
 laptopRoute.get("/:id", async (req, res) => {
