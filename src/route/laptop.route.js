@@ -10,8 +10,8 @@ laptopRoute.get("/", async (req, res) => {
   const limit = parseInt(size);
   const skip = (page - 1) * size;
 
-  let laptop = await Laptop.find().skip(skip).limit(limit);
-  res.send({ page, size, laptop });
+  let data = await Laptop.find().skip(skip).limit(limit);
+  res.send({ page, size, data });
 });
 
 laptopRoute.get("/:id", async (req, res) => {

@@ -10,8 +10,8 @@ mobileRoute.get("/", async (req, res) => {
   const limit = parseInt(size);
   const skip = (page - 1) * size;
 
-  let mobile = await Mobile.find().skip(skip).limit(limit);
-  res.send({ page, size, mobile });
+  let data = await Mobile.find().skip(skip).limit(limit);
+  res.send({ page, size, data });
 });
 
 mobileRoute.get("/:id", async (req, res) => {
